@@ -1,0 +1,3 @@
+class FlutterL10NManager {
+  
+}
