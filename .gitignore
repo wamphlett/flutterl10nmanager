@@ -10,3 +10,7 @@ build/
 
 # Directory created by dartdoc
 doc/api/
+
+# Test files that might be generated
+flutterl10n-export.csv
+intl_*.arb
