@@ -6,6 +6,7 @@ import 'package:csv/csv.dart';
 import 'package:flutterl10nmanager/entities/localisation.dart';
 import 'package:flutterl10nmanager/manager.dart';
 
+/// Takes a 
 class CreateCommand extends Command {
   final name = 'create';
   final description = 'Creates ARB files from a CSV';
@@ -13,7 +14,12 @@ class CreateCommand extends Command {
   final _log = Logger();
 
   CreateCommand() {
-    //argParser.addOption('test');
+    argParser.addOption(
+      'output-path', 
+      abbr: 'o', 
+      defaultsTo: './',
+      help: 'A path to the desired output location'
+    );
   }
 
   void run() async {
@@ -56,14 +62,17 @@ class CreateCommand extends Command {
         }
       }
       if (missingLangs.isNotEmpty) {
-        _log.info('Warning! Missing langauge values [' + missingLangs.join(', ') + '] for: ' + row[0]);
+        _log.warning('Warning! Missing langauge values [' + missingLangs.join(', ') + '] for: ' + row[0]);
       }
     });
 
     for (String lang in languages) {
       String fileName = 'intl_$lang.arb';
+      String outputPath = argResults['output-path'].endsWith('/') 
+        ? argResults['output-path'] 
+        : argResults['output-path'] + '/';
       JsonEncoder encoder = JsonEncoder.withIndent('  ');
-      await File(fileName).writeAsString(
+      await File(outputPath + fileName).writeAsString(
         encoder.convert(manager.generateArb(lang))
       );
       _log.success('Successfully created ARB for ${lang}: ${fileName}');
@@ -88,6 +97,11 @@ class Logger {
 
   void success(String message) {
     pen..green();
+    print(pen(message));
+  }
+  
+  void warning(String message) {
+    pen..yellow();
     print(pen(message));
   }
 
