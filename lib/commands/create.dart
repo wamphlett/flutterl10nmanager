@@ -36,7 +36,13 @@ class CreateCommand extends Command {
     // Validate the data structure
     List headers = rows.first;
     rows.removeAt(0);
-    if (headers.length < 5) {
+    if (
+      headers.length < 5 ||
+      headers[0] != 'id' ||
+      headers[1] != 'description' ||
+      headers[2] != 'type' ||
+      headers[3] != 'placeholders'
+    ) {
       _log.error('Incorrect CSV format. Expected: id|description|type|placeholders|countryCode[|countryCode...]');
       return;
     }
