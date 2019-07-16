@@ -6,7 +6,7 @@ import 'package:flutterl10nmanager/entities/localisation.dart';
 import 'package:flutterl10nmanager/manager.dart';
 import 'package:flutterl10nmanager/helpers.dart';
 
-/// Takes a CSV and generates an arb file for every language in 
+/// Takes a CSV and generates an arb file for every language in
 /// the CSV.
 class CreateCommand extends Command {
   final name = 'create';
