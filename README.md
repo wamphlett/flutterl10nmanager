@@ -1,9 +1,9 @@
-<img src="https://raw.githubusercontent.com/wamphlett/flutterl10nmanager/master/docs/assets/header.png?token=ABXDKUJJZWY4634VCRI57HS5G4WAW" width="100%">
+<img src="https://raw.githubusercontent.com/wamphlett/flutterl10nmanager/master/doc/assets/header.png?token=ABXDKUJJZWY4634VCRI57HS5G4WAW" width="100%">
 
 # Flutter L10N Manager
 Having lots of localisation files to manage can be quite tedious, especially for larger projects. This package aims to make that management easier. The manager will export all of your localisation files into one manageable CSV. This CSV can then be distributed between your translators and once your translations are complete, you can use the manager to rebuild your localisations files straight back into your Flutter project.
 
-<img src="https://raw.githubusercontent.com/wamphlett/flutterl10nmanager/master/docs/assets/spreadsheet.png?token=ABXDKUK5YDIGTMG3HLQRDPS5G4YCC" width="100%">
+<img src="https://raw.githubusercontent.com/wamphlett/flutterl10nmanager/master/doc/assets/spreadsheet.png?token=ABXDKUK5YDIGTMG3HLQRDPS5G4YCC" width="100%">
 
 ## Commands
 

@@ -1,13 +1,14 @@
 name: flutterl10nmanager
 description: A package to help manage multiple languages in a Flutter project.
-# version: 1.0.0
-# homepage: https://www.example.com
-# author: Warren Amphlett <warren@remarkablelives.co.uk>
+version: 1.0.0
+homepage: https://github.com/wamphlett/flutterl10nmanager
+author: Warren Amphlett <warren@remarkablelives.co.uk>
 
 environment:
   sdk: '>=2.4.0 <3.0.0'
 
 dependencies:
+  args: ^1.5.2
   ansicolor: ^1.0.2
   csv: ^4.0.3
   intl: ^0.15.8
