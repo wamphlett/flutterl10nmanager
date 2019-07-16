@@ -42,10 +42,12 @@ class CreateCommand extends Command {
     }
 
     List<String> languages = List.from(headers)..removeRange(0, 4);
-    print(languages);
+    _log.info('Parsing ${rows.length} rows for ${languages.length} languages: [${languages.join(', ')}]');
 
     // Get an instance of the manager
     LocalisationsManager manager = LocalisationsManager();
+    // Create a localisation for each row and add its available values
+    int rowsWithMissingValues = 0;
     rows.forEach((List row) {
       manager.addLocalisation(Localisation(
         id: row[0],
@@ -62,6 +64,7 @@ class CreateCommand extends Command {
         }
       }
       if (missingLangs.isNotEmpty) {
+        rowsWithMissingValues++;
         _log.warning('Warning! Missing langauge values [' + missingLangs.join(', ') + '] for: ' + row[0]);
       }
     });
@@ -75,17 +78,16 @@ class CreateCommand extends Command {
       await File(outputPath + fileName).writeAsString(
         encoder.convert(manager.generateArb(lang))
       );
-      _log.success('Successfully created ARB for ${lang}: ${fileName}');
+      _log.success('Successfully created ARB for ${lang}: ${outputPath + fileName}');
+    }
+
+    // Show warnings
+    if (rowsWithMissingValues > 0) {
+      _log.warning('Warning. There are ${rowsWithMissingValues} localisations that are missing values!');
+      exitCode = 1;
     }
   }
 }
-
-String getFileNameFromPath(String path) =>
-  path.split('/').last;
-
-String getLangFromFileName(String fileName) =>
-  fileName.substring(5, fileName.length - 4);
-
 
 class Logger { 
   AnsiPen pen = AnsiPen();
