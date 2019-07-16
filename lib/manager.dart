@@ -1,28 +1,30 @@
 import 'dart:convert';
-import 'dart:io';
-
+import 'package:intl/intl.dart';
 import 'package:csv/csv.dart';
 import 'package:flutterl10nmanager/entities/localisation.dart';
-import 'package:intl/intl.dart';
+import 'package:flutterl10nmanager/helpers.dart';
 
 class LocalisationsManager {
   static final String messageFileName = 'intl_messages.arb';
   final Map<String, Localisation> localisations = {};
+  final _log = Logger();
 
-  LocalisationsManager();
-
+  /// Adds a new [Localisation] for the manager to keep track of
   void addLocalisation(Localisation localisation) {
     localisations[localisation.id] = localisation;
   }
 
+  /// Takes a new [value] for the given [lang] and adds it to the appropriate 
+  /// [Localisation] based on the [localisationId].
   void addValueForLocalisation(String lang, String localisationId, String value) {
     if (localisations[localisationId] == null) {
-      print("MISSING LOCALISATION: ${localisationId}");
+      _log.warning("Warning! Missing localisation for ${localisationId}. Value not added.");
       return;
     }
     localisations[localisationId].setLanguageValue(lang, value);
   }
 
+  /// Returns the current contents of the manager in CSV format
   String getAsCSV() {
     List<String> languages = getLanguages();
     List<List<dynamic>> rows = [];
@@ -45,6 +47,7 @@ class LocalisationsManager {
     return ListToCsvConverter().convert(rows, fieldDelimiter: '|');
   }
 
+  /// Generates an arb object for the given [lang]
   Map<String, dynamic> generateArb(String lang) {
     Map<String, dynamic> arb = {
       '@@last_modified': DateFormat('y-MM-ddTHH:mm:ss.S').format(DateTime.now())
@@ -63,6 +66,8 @@ class LocalisationsManager {
     return arb;
   }
 
+  /// Returns a list of all the language values the manager
+  /// knows about.
   List<String> getLanguages() {
     final List<String> languages = [];
     localisations.forEach((k, localisation) {
@@ -76,6 +81,7 @@ class LocalisationsManager {
     return languages;
   }
 
+  /// Basic validation of arb resources
   static bool isValidResourceObject(dynamic resource) {
     return resource is Map
       && resource['description'] != null
