@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/wamphlett/flutterl10nmanager/master/docs/assets/header.png?token=ABXDKUJJZWY4634VCRI57HS5G4WAW" width="100%">
+
 # Flutter L10N Manager
 A package to help manage multiple languages in a Flutter project
 
