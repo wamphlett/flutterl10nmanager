@@ -7,6 +7,7 @@ pubspec.lock
 
 # Conventional directory for build outputs
 build/
+bin/*.aot*
 
 # Directory created by dartdoc
 doc/api/

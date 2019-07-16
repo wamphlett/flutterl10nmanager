@@ -5,6 +5,19 @@ Having lots of localisation files to manage can be quite tedious, especially for
 
 <img src="https://raw.githubusercontent.com/wamphlett/flutterl10nmanager/master/doc/assets/spreadsheet.png?token=ABXDKUK5YDIGTMG3HLQRDPS5G4YCC" width="100%">
 
+## Install
+After cloning the package. Navigate to the package directory and create the executable.
+
+```
+dart2aot bin/main.dart bin/main.dart.aot
+```
+
+Then activate the executable file globally
+
+```
+pub global activate --source path path/to/flutterl10nmanager
+```
+
 ## Commands
 
 ### `export`
