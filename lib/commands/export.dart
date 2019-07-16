@@ -5,7 +5,10 @@ import 'package:flutterl10nmanager/entities/localisation.dart';
 import 'package:flutterl10nmanager/manager.dart';
 import 'package:flutterl10nmanager/helpers.dart';
 
-
+/// Exports the current Flutter internationalisation files to a singl CSV
+/// so that all translations can be worked on in on document. Once translation is
+/// complete, you can then use [CreateCommand] to generate new arb files to use
+/// in your Flutter project.
 class ExportCommand extends Command {
   final name = 'export';
   final description = 'Exports the current translations to a single CSV';
@@ -13,7 +16,12 @@ class ExportCommand extends Command {
   final _log = Logger();
 
   ExportCommand() {
-    //argParser.addOption('test');
+    argParser.addOption(
+      'output-path',
+      abbr: 'o',
+      help: 'A path to the desired output location',
+      defaultsTo: './flutterl10n-export.csv'
+    );
   }
 
   void run() async {
@@ -68,9 +76,8 @@ class ExportCommand extends Command {
         });
     }
 
-    String exportName = 'flutterl10n-export.csv';
+    String exportName = argResults['output-path'];
     await File(exportName).writeAsString(manager.getAsCSV());
-
     _log.success("Successfully exported data to CSV: ${exportName}");
   }
 }
