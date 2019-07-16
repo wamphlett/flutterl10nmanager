@@ -14,11 +14,13 @@ class LocalisationsManager {
     localisations[localisation.id] = localisation;
   }
 
-  /// Takes a new [value] for the given [lang] and adds it to the appropriate 
+  /// Takes a new [value] for the given [lang] and adds it to the appropriate
   /// [Localisation] based on the [localisationId].
-  void addValueForLocalisation(String lang, String localisationId, String value) {
+  void addValueForLocalisation(
+      String lang, String localisationId, String value) {
     if (localisations[localisationId] == null) {
-      _log.warning("Warning! Missing localisation for ${localisationId}. Value not added.");
+      _log.warning(
+          "Warning! Missing localisation for ${localisationId}. Value not added.");
       return;
     }
     localisations[localisationId].setLanguageValue(lang, value);
@@ -40,7 +42,8 @@ class LocalisationsManager {
         localisation.type,
         jsonEncode(localisation.placeholders)
       ];
-      languages.forEach((lang) => row.add(localisation.valueForLang(lang) ?? ''));
+      languages
+          .forEach((lang) => row.add(localisation.valueForLang(lang) ?? ''));
       rows.add(row);
     });
 
@@ -83,9 +86,9 @@ class LocalisationsManager {
 
   /// Basic validation of arb resources
   static bool isValidResourceObject(dynamic resource) {
-    return resource is Map
-      && resource['description'] != null
-      && resource['type'] != null
-      && resource['placeholders'] != null;
+    return resource is Map &&
+        resource['description'] != null &&
+        resource['type'] != null &&
+        resource['placeholders'] != null;
   }
 }

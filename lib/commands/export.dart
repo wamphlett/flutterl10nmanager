@@ -16,19 +16,21 @@ class ExportCommand extends Command {
   final _log = Logger();
 
   ExportCommand() {
-    argParser.addOption(
-      'output-path',
-      abbr: 'o',
-      help: 'A path to the desired output location',
-      defaultsTo: './flutterl10n-export.csv'
-    );
+    argParser.addOption('output-path',
+        abbr: 'o',
+        help: 'A path to the desired output location',
+        defaultsTo: './flutterl10n-export.csv');
   }
 
   void run() async {
-
-    final String l10nPath = argResults.rest[0].endsWith('/') ? argResults.rest[0] : argResults.rest[0] + '/';
-    if (FileSystemEntity.typeSync(l10nPath + LocalisationsManager.messageFileName) == FileSystemEntityType.notFound) {
-      _log.error('Unable to find a flutter message file in the given dir. Giving up.');
+    final String l10nPath = argResults.rest[0].endsWith('/')
+        ? argResults.rest[0]
+        : argResults.rest[0] + '/';
+    if (FileSystemEntity.typeSync(
+            l10nPath + LocalisationsManager.messageFileName) ==
+        FileSystemEntityType.notFound) {
+      _log.error(
+          'Unable to find a flutter message file in the given dir. Giving up.');
       return;
     }
 
@@ -36,21 +38,22 @@ class ExportCommand extends Command {
     LocalisationsManager manager = LocalisationsManager();
     // Create the resources
     await File(l10nPath + LocalisationsManager.messageFileName)
-      .readAsString()
-      .then((fileContents) => jsonDecode(fileContents))
-      .then((jsonData) {
-        jsonData.keys.forEach((String e) {
-          if (e.startsWith('@') && LocalisationsManager.isValidResourceObject(jsonData[e])) { 
-            manager.addLocalisation(Localisation(
-              id: e.substring(1),
-              description: jsonData[e]['description'],
-              type: jsonData[e]['type'],
-              placeholders: jsonData[e]['placeholders'],
-            ));
-          }
-        });
+        .readAsString()
+        .then((fileContents) => jsonDecode(fileContents))
+        .then((jsonData) {
+      jsonData.keys.forEach((String e) {
+        if (e.startsWith('@') &&
+            LocalisationsManager.isValidResourceObject(jsonData[e])) {
+          manager.addLocalisation(Localisation(
+            id: e.substring(1),
+            description: jsonData[e]['description'],
+            type: jsonData[e]['type'],
+            placeholders: jsonData[e]['placeholders'],
+          ));
+        }
       });
-      
+    });
+
     // Now find all the language specific files
     Directory dir = Directory(l10nPath);
     Map<String, String> localisationFiles = {};
@@ -64,16 +67,16 @@ class ExportCommand extends Command {
 
     for (String lang in localisationFiles.keys) {
       await File(l10nPath + localisationFiles[lang])
-        .readAsString()
-        .then((fileContents) => jsonDecode(fileContents))
-        .then((jsonData) {
-          jsonData.keys.forEach((String e) {
-            if (e.startsWith('@')) {
-              return;
-            }
-            manager.addValueForLocalisation(lang, e, jsonData[e]);
-          });
+          .readAsString()
+          .then((fileContents) => jsonDecode(fileContents))
+          .then((jsonData) {
+        jsonData.keys.forEach((String e) {
+          if (e.startsWith('@')) {
+            return;
+          }
+          manager.addValueForLocalisation(lang, e, jsonData[e]);
         });
+      });
     }
 
     String exportName = argResults['output-path'];

@@ -12,7 +12,7 @@ class Localisation {
   }
 
   String valueForLang(String lang) =>
-    values[lang] != null ? values[lang].value : null;
+      values[lang] != null ? values[lang].value : null;
 }
 
 class LocalisationValue {
