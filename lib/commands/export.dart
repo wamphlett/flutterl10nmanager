@@ -42,8 +42,7 @@ class ExportCommand extends Command {
           }
         });
       });
-
-
+      
     // Now find all the language specific files
     Directory dir = Directory(l10nPath);
     Map<String, String> localisationFiles = {};
@@ -55,7 +54,6 @@ class ExportCommand extends Command {
       }
     });
 
-    print(localisationFiles);
     for (String lang in localisationFiles.keys) {
       await File(l10nPath + localisationFiles[lang])
         .readAsString()
@@ -72,7 +70,6 @@ class ExportCommand extends Command {
 
     String exportName = 'flutterl10n-export.csv';
     await File(exportName).writeAsString(manager.getAsCSV());
-
 
     _log.success("Successfully exported data to CSV: ${exportName}");
   }

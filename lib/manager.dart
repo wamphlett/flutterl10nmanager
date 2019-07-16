@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:flutterl10nmanager/entities/localisation.dart';
+import 'package:intl/intl.dart';
 
 class LocalisationsManager {
   static final String messageFileName = 'intl_messages.arb';
@@ -42,6 +43,24 @@ class LocalisationsManager {
     });
 
     return ListToCsvConverter().convert(rows, fieldDelimiter: '|');
+  }
+
+  Map<String, dynamic> generateArb(String lang) {
+    Map<String, dynamic> arb = {
+      '@@last_modified': DateFormat('y-MM-ddTHH:mm:ss.S').format(DateTime.now())
+    };
+    localisations.forEach((localisationId, localisation) {
+      String langValue = localisation.valueForLang(lang);
+      if (langValue != null) {
+        arb[localisation.id] = langValue;
+        arb['@' + localisation.id] = {
+          'description': localisation.description,
+          'type': localisation.type,
+          'placeholders': localisation.placeholders,
+        };
+      }
+    });
+    return arb;
   }
 
   List<String> getLanguages() {
