@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:args/command_runner.dart';
-import 'package:ansicolor/ansicolor.dart';
 import 'package:flutterl10nmanager/entities/localisation.dart';
 import 'package:flutterl10nmanager/manager.dart';
+import 'package:flutterl10nmanager/helpers.dart';
 
 
 class ExportCommand extends Command {
@@ -73,27 +73,4 @@ class ExportCommand extends Command {
 
     _log.success("Successfully exported data to CSV: ${exportName}");
   }
-}
-
-String getFileNameFromPath(String path) =>
-  path.split('/').last;
-
-String getLangFromFileName(String fileName) =>
-  fileName.substring(5, fileName.length - 4);
-
-
-class Logger { 
-  AnsiPen pen = AnsiPen();
-  
-  void error(String message) {
-    pen..red();
-    print(pen(message));
-  }
-
-  void success(String message) {
-    pen..green();
-    print(pen(message));
-  }
-
-  void info(String message) => print(message);
 }

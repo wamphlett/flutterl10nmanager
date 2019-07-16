@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:args/command_runner.dart';
-import 'package:ansicolor/ansicolor.dart';
 import 'package:csv/csv.dart';
 import 'package:flutterl10nmanager/entities/localisation.dart';
 import 'package:flutterl10nmanager/manager.dart';
+import 'package:flutterl10nmanager/helpers.dart';
 
 /// Takes a 
 class CreateCommand extends Command {
@@ -87,25 +87,4 @@ class CreateCommand extends Command {
       exitCode = 1;
     }
   }
-}
-
-class Logger { 
-  AnsiPen pen = AnsiPen();
-  
-  void error(String message) {
-    pen..red();
-    print(pen(message));
-  }
-
-  void success(String message) {
-    pen..green();
-    print(pen(message));
-  }
-  
-  void warning(String message) {
-    pen..yellow();
-    print(pen(message));
-  }
-
-  void info(String message) => print(message);
 }
