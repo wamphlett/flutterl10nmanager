@@ -1,5 +1,5 @@
 name: flutterl10nmanager
-description: A sample command-line application.
+description: A package to help manage multiple languages in a Flutter project.
 # version: 1.0.0
 # homepage: https://www.example.com
 # author: Warren Amphlett <warren@remarkablelives.co.uk>
